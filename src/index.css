@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@theme {
+  --font-outfit: 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --color-cyan-glow: #22d3ee;
+  --color-cyan-dim: #155e75;
+  --color-rose-glow: #fb7185;
+  --color-rose-dim: #9f1239;
+  --color-slate-deep: #0f172a;
+  --color-slate-card: rgba(30, 41, 59, 0.6);
+  --color-slate-cell: rgba(51, 65, 85, 0.35);
+  --color-slate-border: rgba(100, 116, 139, 0.25);
+  --color-gold-glow: #fbbf24;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 40%, #0f172a 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ambient animated background */
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: 
+    radial-gradient(ellipse at 20% 50%, rgba(34, 211, 238, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(251, 113, 133, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(139, 92, 246, 0.04) 0%, transparent 50%);
+  animation: ambient-drift 20s ease-in-out infinite alternate;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes ambient-drift {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(-3%, 3%) rotate(2deg); }
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Glow utilities */
+.glow-cyan {
+  text-shadow: 0 0 10px rgba(34, 211, 238, 0.5), 0 0 30px rgba(34, 211, 238, 0.2);
+}
+
+.glow-rose {
+  text-shadow: 0 0 10px rgba(251, 113, 133, 0.5), 0 0 30px rgba(251, 113, 133, 0.2);
+}
+
+.glow-gold {
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.5), 0 0 30px rgba(251, 191, 36, 0.2);
+}
+
+/* Glass morphism card */
+.glass-card {
+  background: rgba(30, 41, 59, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(100, 116, 139, 0.2);
+  border-radius: 1.25rem;
+}
+
+/* Grid cell glass style */
+.glass-cell {
+  background: rgba(51, 65, 85, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(100, 116, 139, 0.2);
+  border-radius: 1rem;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.glass-cell:hover {
+  border-color: rgba(148, 163, 184, 0.4);
+  background: rgba(51, 65, 85, 0.5);
+}
+
+/* Win line animation */
+@keyframes draw-line {
+  from {
+    stroke-dashoffset: 400;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.win-line-animate {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  animation: draw-line 0.6s ease-out forwards;
+  animation-delay: 0.15s;
+}
+
+/* Pulse ring on winner score */
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.4); }
+  70% { box-shadow: 0 0 0 12px rgba(34, 211, 238, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0); }
+}
+
+.pulse-cyan {
+  animation: pulse-ring 1.5s ease-out infinite;
+}
+
+@keyframes pulse-ring-rose {
+  0% { box-shadow: 0 0 0 0 rgba(251, 113, 133, 0.4); }
+  70% { box-shadow: 0 0 0 12px rgba(251, 113, 133, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(251, 113, 133, 0); }
+}
+
+.pulse-rose {
+  animation: pulse-ring-rose 1.5s ease-out infinite;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.3);
+  border-radius: 3px;
+}
+
+/* Flash overlay */
+@keyframes win-flash {
+  0% { opacity: 0; }
+  30% { opacity: 0.15; }
+  100% { opacity: 0; }
+}
